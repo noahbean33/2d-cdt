@@ -19,7 +19,7 @@ public:
     // lambda_: cosmological constant for action computation
     // targetVolume_: desired number of triangles
     // seed_: RNG seed (defaults to 0 if not provided)
-    static void start(int sweeps, double lambda_, int targetVolume_, int seed_ = 42);
+    static void start(int sweeps, double lambda_, int targetVolume_, int seed_ = 0);
 
     // Adds an observable to the simulation for measurement
     // o: reference to an Observable object (e.g., VolumeProfile, Hausdorff)
