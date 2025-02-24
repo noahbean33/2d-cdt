@@ -1,17 +1,18 @@
 # Monte Carlo Simulation of Two-Dimensional Causal Dynamical Triangulations
 
-This codebase provides a simple framework for sampling the partition sum of two-dimensional Causal Dynamical Triangulations (CDT), primarily as a model of two-dimensional lattice quantum gravity. It is straightforward to implement custom observables for which one can subsequently compute ensemble averages, corresponding to its quantum expectation value. Simulation parameters can be set using a config file. 
+This codebase provides a framework for sampling the partition sum of two-dimensional Causal Dynamical Triangulations (CDT), a model of 2D lattice quantum gravity. It supports custom observables for computing quantum expectation values, with simulation parameters set via a config file. This fork enhances the original code with HPC and machine learning upgrades.
 
 ## Usage
-The code can be built using GNU Make:
+### Build with GNU Make:
 ```bash
 make
 ```
-The directory `example` shows how to start a simple simulation of a small CDT system. Issuing the command (one may have to fix execute permissions)
+### Run the example simulation in `example`:
 ```bash
 ./run.sh
 ```
-will build the project and run the simulation with a standard config file. The template for such a config file is as follows:
+
+### Config file template (required parameters):
 ```
 lambda          0.693147
 targetVolume    16000
@@ -22,30 +23,41 @@ measurements    100
 sphere          false
 importGeom      true
 ```
-All parameters are required. 
-
-- `lambda` is the cosmological constant and should generally be set to the critical value of `ln(2) = 0.693147...`.
-- `targetVolume` is the target number of triangles of the system. Measurements are only performed at exactly this volume. Only even-numbered volumes are possible in the current setup, since triangles are always created in pairs.
-- `slices` is the number of time slices in the geometry.
-- `seed` is the seed for the random number generator. There is no further seeding using e.g. timestamps, so using the same seed in different simulations (while keeping all other parameters constant) ensures identical output.
-- `fileID` is the identifier used to mark output files of observables.
-- `measurements` is the number of measurements that should be performed for each observable before execution terminates.
-- `sphere` instructs the simulation whether to force the configuration into an effective spherical topology or not. More comments on the spherical topology follow below.
-- `importGeom` instructs whether the program should search for a previously generated geometry that matches the targetVolume, slices and seed, before starting the simulation. Geometries are exported to / imported from the folder `geom/`.
+- **lambda**: Cosmological constant (typically ln(2) = 0.693147).
+- **targetVolume**: Target number of triangles (even numbers only).
+- **slices**: Number of time slices.
+- **seed**: RNG seed (fixed output for same seed).
+- **fileID**: Output file identifier.
+- **measurements**: Number of observable measurements.
+- **sphere**: Enforce spherical topology (see below).
+- **importGeom**: Import existing geometry from `geom/`.
 
 ## Observables
-Several standard observables are supplied in the directory `observables`. These can be added to the simulation in `main.cpp`. In the standard `main.cpp`, it is shown how to do this for the volume profile and Hausdorff dimension observables.
+Standard observables (e.g., volume profile, Hausdorff dimension) are in `observables/`. Add them in `main.cpp`. Custom observables can use `Universe` (access to `Vertex`, `Link`, `Triangle`) and `Observable` (metric spheres, distances).
 
-Custom observables can be created based on the standard observables supplied here. The class `Universe` offers access to all `Vertex`, `Link`, and `Triangle` objects, and lists containing the neighbors of `Vertex` and `Triangle` objects. Furthermore, the class `Observable` provides methods for constructing metric spheres (circles) on both the direct and dual lattices, and methods for computing the (dual) distance between arbitrary `Vertex` and `Triangle` objects.
+## Optimization Plan (2025)
+This fork is being upgraded over 12 months to enhance performance and physics capabilities using HPC (OpenMP, MPI, GPU) and machine learning (ML):
+
+### Timeline
+- **Months 1-2 (Feb-Mar 2025)**: Profile with `gprof`, collect ML training data (e.g., move rates, observables).
+- **Months 3-4 (Apr-May 2025)**: Add OpenMP for parallel sweeps, integrate RL (e.g., DQN) for move optimization.
+- **Months 5-6 (Jun-Jul 2025)**: Optimize `Pool/Bag` memory, predict observables (e.g., volume profiles) with ML.
+- **Months 7-8 (Aug-Sep 2025)**: Implement MPI for distributed runs, scale ML training across nodes.
+- **Months 9-10 (Oct-Nov 2025)**: Port moves to GPU (CUDA), extend to 4D CDT with ML support.
+- **Months 11-12 (Dec 2025-Jan 2026)**: Hybrid OpenMP/MPI/GPU runs, analyze 4D physics (e.g., phase transitions).
+
+### Goals
+- **Performance**: Achieve 10-100x speedup via HPC/GPU, scale to \(N_2 = 10^7\) and beyond.
+- **ML**: Optimize moves (reduce autocorrelation), predict observables, detect phases.
+- **Physics**: Enable 4D CDT simulations for Planck-scale insights.
+- **Repo**: Updated fork at `https://github.com/noahbean33/2d-cdt` with code, docs, and results.
 
 ## Citation
-If you use this codebase or expand upon it, please consider citing
-
+If using or extending this code, cite the original work:
 ```bibtex
 @misc{brunekreef2023simulating,
   title = {Simulating {{CDT}} quantum gravity},
-  author = {Brunekreef, Joren and G{\"o}rlich, Andrzej and Loll, Renate},
-  year = {2023},
+  author = {Brunekreef, Joren and G{"o}rlich, Andrzej and Loll, Renate},n  year = {2023},
   month = oct,
   number = {arXiv:2310.16744},
   eprint = {2310.16744},
@@ -54,6 +66,7 @@ If you use this codebase or expand upon it, please consider citing
   doi = {10.48550/arXiv.2310.16744},
   urldate = {2023-11-13},
   archiveprefix = {arxiv},
-  keywords = {General Relativity and Quantum Cosmology,High Energy Physics - Lattice,High Energy Physics - Theory}
+  keywords = {General Relativity and Quantum Cosmology, High Energy Physics - Lattice, High Energy Physics - Theory}
 }
 ```
+Please also acknowledge this fork: `https://github.com/noahbean33/2d-cdt`.
