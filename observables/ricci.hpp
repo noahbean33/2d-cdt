@@ -1,19 +1,34 @@
 // Copyright 2020 Joren Brunekreef and Andrzej Görlich
-#pragma once
+#pragma once    // Ensures this header is included only once during compilation
 
-#include <string>
-#include <vector>
-#include "../observable.hpp"
-#include "../universe.hpp"
+#include <string>           // For std::string (e.g., identifier, name)
+#include <vector>           // For storing epsilon values and possibly measurement data
+#include "../observable.hpp" // Base class Observable, providing measurement framework
+#include "../universe.hpp"   // Provides access to Universe’s geometry data (e.g., vertices)
 
+// Ricci class, inheriting from Observable to measure a general Ricci curvature
 class Ricci : public Observable {
 public:
-	Ricci(std::string id, std::vector<int> epsilons) : Observable(id), epsilons(epsilons) { name = "ricci"; }
+    // Constructor: initializes the observable with an identifier and epsilon values
+    // id: String identifier for output files (e.g., "collab-16000-1")
+    // epsilons: Vector of integers specifying radii for sphere distance measurements
+    Ricci(std::string id, std::vector<int> epsilons)
+        : Observable(id), epsilons(epsilons) {
+        name = "ricci";  // Set observable name for file naming and identification
+    }
 
-	void process();
+    // Implements the pure virtual process() method from Observable
+    // Computes a general Ricci curvature-like metric across specified epsilon values
+    // Likely uses average sphere distances to estimate curvature (Sec. 3.4)
+    void process();
 
 private:
-	std::vector<int> epsilons;
+    // Vector of epsilon values (radii) for sphere distance measurements
+    // Passed via constructor, used in process() to compute curvature at multiple scales
+    std::vector<int> epsilons;
 
-	double averageSphereDistance(Vertex::Label p1, int epsilon);
+    // Computes the average distance from a vertex to its epsilon-sphere neighbors
+    // p1: Starting vertex, epsilon: Radius for the sphere
+    // Returns average link distance as a double, likely used in curvature calculation
+    double averageSphereDistance(Vertex::Label p1, int epsilon);
 };
