@@ -6,7 +6,7 @@ int Universe::nSlices = 0;  // Number of time slices, set by create() or importG
 std::vector<int> Universe::sliceSizes;  // Number of vertices per time slice
 bool Universe::sphere = false;  // Flag for spherical topology, set by config
 bool Universe::imported = false;  // Flag indicating if geometry was imported
-std::default_random_engine Universe::rng(0);  // RNG for geometry ops (TODO: seed properly)
+std::mt19937 Universe::rng;  // Upgraded to Mersenne Twister, default-constructed
 Bag<Triangle, Triangle::pool_size> Universe::trianglesAll(rng);  // Bag of all triangles (add move candidates)
 Bag<Vertex, Vertex::pool_size> Universe::verticesFour(rng);  // Bag of order-4 vertices (delete move candidates)
 Bag<Triangle, Triangle::pool_size> Universe::trianglesFlip(rng);  // Bag of flippable triangles (flip move candidates)
@@ -419,8 +419,7 @@ void Universe::updateTriangleData() {
         }
 
         // General case: all three neighbors
-        triangleNeighbors-at(t) = {t->getTriangleLeft(), t->getTriangleRight(), t->getTriangleCenter()};
-    }
+        triangleNeighbors.at(t) = {t->getTriangleLeft(), t->getTriangleRight(), t->getTriangleCenter()};    }
 }
 
 // Exports current geometry to a file for checkpointing
@@ -560,4 +559,11 @@ std::string Universe::getGeometryFilename(int targetVolume, int slices, int seed
     if (sphere) expectedFn += "-sphere";  // Append spherical flag if set
     expectedFn += ".dat";  // File extension
     return expectedFn;
+}
+
+// Add at the end of the file
+void Universe::seedRNG(int seed, int offset) {
+    // Combine seed and offset, ensuring the result fits within result_type
+    std::mt19937::result_type combined_seed = static_cast<std::mt19937::result_type>(seed) + offset;
+    rng.seed(combined_seed);
 }

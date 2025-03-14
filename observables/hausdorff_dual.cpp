@@ -2,6 +2,7 @@
 #include <string>               // For std::string and std::to_string
 #include <vector>               // For storing dual sphere triangle labels
 #include "hausdorff_dual.hpp"   // Header for HausdorffDual class, defining interface
+#include <algorithm>            // For std::find and std::accumulate
 
 // Implements the process() method to compute dual Hausdorff dimension
 // Measures dual sphere sizes for increasing radii and formats results

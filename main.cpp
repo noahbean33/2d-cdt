@@ -14,6 +14,7 @@
 #include "observables/ricci_dual.hpp"       // Dual Ricci curvature (unused here)
 #include "observables/riccih.hpp"           // Horizontal Ricci curvature (unused here)
 #include "observables/ricciv.hpp"           // Vertical Ricci curvature (unused here)
+#include <algorithm>            // For std::find and std::accumulate
 
 int main(int argc, const char * argv[]) {
     // Variable to store config file name from command line

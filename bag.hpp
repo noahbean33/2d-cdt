@@ -32,18 +32,12 @@ private:
     unsigned int size_;
 
     // Reference to a random number generator for picking elements
-    std::default_random_engine &rng;
-
-    // Enum defining the EMPTY marker for unused slots
-    // -1 indicates an inactive or invalid entry in indices or elements
-    enum : int {
-        EMPTY = -1  // Could be constexpr, but enum suffices here
-    };
+    std::mt19937& rng;  // Updated to use std::mt19937
 
 public:
     // Constructor: initializes Bag with a random engine reference
     // rng: Random number generator for pick() operation
-    explicit Bag(std::default_random_engine &rng)
+    explicit Bag(std::mt19937& rng)
         : capacity_(N), size_(0), rng(rng) {
         indices.fill(EMPTY);  // Initialize all indices to EMPTY (-1)
     }
@@ -111,4 +105,11 @@ public:
 
     // Returns pointer to the end of active elements (past size_)
     auto end() { return &elements[size_]; }
+
+private:
+    // Enum defining the EMPTY marker for unused slots
+    // -1 indicates an inactive or invalid entry in indices or elements
+    enum : int {
+        EMPTY = -1  // Could be constexpr, but enum suffices here
+    };
 };

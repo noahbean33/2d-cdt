@@ -3,6 +3,7 @@
 #include <vector>              // For storing epsilon values, origins, and distances
 #include <string>              // For std::string and std::to_string
 #include <unordered_map>       // For efficient vertex lookup in averageSphereDistance
+#include <algorithm>            // For std::find and std::accumulate
 
 // Implements the process() method to compute horizontal Ricci curvature
 // Measures average sphere distances for each epsilon and formats results

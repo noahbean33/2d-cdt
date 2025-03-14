@@ -1,6 +1,7 @@
 // Copyright 2020 Joren Brunekreef and Andrzej Görlich
 #include "vertex.hpp"   // Header for Vertex class, defining structure and interface
 #include "triangle.hpp" // Header for Triangle class, used for connectivity labels
+#include <algorithm>            // For std::find and std::accumulate
 
 // Returns the label of the left neighboring triangle
 // Simply retrieves the stored tl member (index in Pool<Triangle>)

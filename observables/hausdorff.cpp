@@ -2,6 +2,7 @@
 #include <vector>               // For storing primal sphere vertex labels
 #include <string>               // For std::string and std::to_string
 #include "hausdorff.hpp"        // Header for Hausdorff class, defining interface
+#include <algorithm>            // For std::find and std::accumulate
 
 // Implements the process() method to compute primal Hausdorff dimension
 // Measures sphere sizes for increasing radii and formats results

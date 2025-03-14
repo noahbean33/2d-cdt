@@ -105,10 +105,13 @@ public:
     static std::vector<std::vector<Link::Label>> vertexLinks;     // Links connected to each vertex
     static std::vector<std::vector<Link::Label>> triangleLinks;   // Links bordering each triangle
 
+    // Added method to seed the RNG
+    static void seedRNG(int seed, int offset = 0);  // Updated declaration
+
 private:
     // Private default constructor to prevent instantiation (Universe is static-only)
     Universe() {}
 
     // Random number generator for geometry operations (e.g., initial creation)
-    static std::default_random_engine rng;
+    static std::mt19937 rng;  // Upgraded to Mersenne Twister for better randomness
 };

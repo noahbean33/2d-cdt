@@ -2,6 +2,7 @@
 #include <unordered_map>        // For efficient triangle lookup in averageSphereDistance
 #include <string>               // For std::string and std::to_string
 #include <vector>               // For storing epsilon values, origins, and distances
+#include <algorithm>            // For std::find (and std::accumulate, already used)
 #include "ricci_dual.hpp"       // Header for RicciDual class, defining interface
 
 // Implements the process() method to compute dual Ricci curvature

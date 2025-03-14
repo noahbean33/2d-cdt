@@ -1,6 +1,7 @@
 // Copyright 2020 Joren Brunekreef and Andrzej Görlich
 #include <string>
 #include "volume_profile.hpp"
+#include <algorithm>            // For std::find and std::accumulate
 
 void VolumeProfile::process() {
 	std::string tmp = "";

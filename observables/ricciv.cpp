@@ -2,6 +2,7 @@
 #include <string>               // For std::string and std::to_string
 #include <vector>               // For storing epsilon values, origins, and distances
 #include <unordered_map>        // For efficient vertex lookup in averageSphereDistance
+#include <algorithm>            // For std::find and std::accumulate
 #include "ricciv.hpp"          // Header for RicciV class, defining interface
 
 // Implements the process() method to compute vertical Ricci curvature

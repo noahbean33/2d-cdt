@@ -1,5 +1,6 @@
 // Copyright 2020 Joren Brunekreef and Andrzej Görlich
 #include "triangle.hpp"    // Header for Triangle class, defining structure and interface
+#include <algorithm>            // For std::find and std::accumulate
 
 // Note: This file is currently empty beyond the include statement.
 // Expected content: Implementations of Triangle class methods declared in triangle.hpp.

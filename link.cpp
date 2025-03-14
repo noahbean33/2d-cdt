@@ -2,6 +2,7 @@
 #include "link.hpp"     // Header for Link class, defining structure and interface
 #include "vertex.hpp"   // Vertex class, used for endpoint connectivity
 #include "triangle.hpp" // Triangle class, used for bordering triangles
+#include <algorithm>            // For std::find and std::accumulate
 
 // Returns the label of the "final" vertex (endpoint) of the link
 // Simply retrieves the stored vf member (index in Pool<Vertex>)
