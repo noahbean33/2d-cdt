@@ -72,7 +72,8 @@ int main(int argc, const char * argv[]) {
 
     // Print seed for logging/debugging
     printf("seed: %d\n", seed);
-
+    printf("lambda: %f, targetVolume: %d, slices: %d, seed: %d\n", lambda, targetVolume, slices, seed);
+    
     // Launch the Monte Carlo simulation
     Simulation::start(measurements, lambda, targetVolume, seed);
     // Parameters: number of measurements, cosmological constant, target volume, seed

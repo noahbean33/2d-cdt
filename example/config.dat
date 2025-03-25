@@ -1,8 +1,8 @@
-lambda			0.693147
-targetVolume	2000
-slices			40
-sphere			false
-seed			123
-fileID			example-2000-123
-measurements	10
-importGeom		false
+lambda			0.693147 # cosmological constant, ln(2) for 2D CDT
+targetVolume	2000 # desired number of triangles
+slices			40 # number of time slices
+sphere			false # toroidal topology
+seed			42 # RNG seed
+fileID			example-2000-42 # output file identifier
+measurements	10 # number of observable measurements
+importGeom		false # create new geometry, don’t import
