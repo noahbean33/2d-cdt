@@ -125,3 +125,48 @@ vertexNeighbors.reserve(vmax + 1);  // Pre-size for known max
 The CDT codebase offers significant HPC opportunities in its Monte Carlo core (`Simulation`), geometry management (`Universe`), and measurement framework (`Observable`). OpenMP provides quick multi-core gains (4-16x), MPI scales to large systems and ensembles (10-50x), GPU accelerates compute-intensive tasks (10-100x), and general optimizations enhance efficiency (20-50%). These align with the 12-month timeline: profiling (Phase 1), OpenMP (Phase 2), memory/I-O (Phase 3), MPI (Phase 4), GPU (Phase 5), and hybrid tuning (Phase 6), supporting the paper’s scalability outlook (Sec. 4).
 
 For further details, see the codebase comments or contact `https://github.com/noahbean33`.
+
+Modern C++ Features:
+Replace raw pointers with smart pointers (std::unique_ptr, std::shared_ptr) for better memory management
+Use std::string_view for read-only string parameters instead of const std::string&
+Add constexpr and noexcept where appropriate for better optimization
+Use std::filesystem for file operations (C++17)
+Configuration System Improvements:
+Add type safety to ConfigReader using std::variant or a type-safe configuration class
+Implement default values for configuration parameters
+Add validation for configuration values (e.g., positive numbers where required)
+Support comments in the config file (lines starting with #)
+Error Handling:
+Replace assert with proper exception handling
+Add more descriptive error messages
+Consider using an error code system or custom exceptions
+Performance Optimizations:
+Profile the code to identify bottlenecks (especially in the Monte Carlo steps)
+Consider parallelization using OpenMP or TBB for independent operations
+Use move semantics for large objects
+Pre-allocate memory where possible (e.g., in std::vector)
+Testing:
+Add unit tests (using Catch2 or Google Test)
+Add integration tests
+Consider property-based testing for the physics engine
+Code Organization:
+Split large files (like universe.hpp/cpp) into smaller, focused modules
+Use namespaces to prevent name collisions
+Group related functionality into separate directories
+Documentation:
+Add Doxygen-style comments for public APIs
+Document mathematical formulas and algorithms
+Add a CONTRIBUTING.md with development guidelines
+Document the build and test process
+Build System:
+Consider migrating from Make to CMake for better cross-platform support
+Add compiler warning flags and treat warnings as errors
+Add static analysis to the build process
+Observables:
+Create a registration system for observables instead of hardcoding them
+Add more observables for different physical quantities
+Consider adding visualization support (e.g., VTK or Python bindings)
+Continuous Integration:
+Set up GitHub Actions or similar CI
+Add automated testing
+Add code coverage reporting
